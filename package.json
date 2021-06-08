@@ -1,7 +1,7 @@
 {
   "name": "chat",
   "version": "1.0.0",
-  "description": "",
+  "description": "simple chat app using socket.io",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
