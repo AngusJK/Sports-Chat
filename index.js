@@ -12,9 +12,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 // });
 
 io.on('connection', (socket) => {
+  console.log("a user connected: " + socket.id);
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);
   });
+  socket.on('disconnect', () => {
+    console.log("a user gone and disconnected");
+  })
 });
 
 http.listen(PORT, () => {
