@@ -4,12 +4,14 @@
   "description": "simple chat app using socket.io",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index",
+    "dev": "nodemon index"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "moment": "^2.29.1",
     "socket.io": "^4.1.2"
   },
   "devDependencies": {
