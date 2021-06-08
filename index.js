@@ -11,6 +11,9 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log('A user connected...');
+  socket.on('disconnect', () => {
+    console.log('A user has disconnected...');
+  });
 });
 
 const PORT = 3000;
