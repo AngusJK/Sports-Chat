@@ -1,22 +1,20 @@
-const socket = io.connect('http://localhost:3000');
+const socket = io();
 
-const message = document.getElementById('message');
-const handle = document.getElementById('handle');
-const btn = document.getElementById('send');
-const output = document.getElementById('output');
+var messages = document.getElementById('messages');
+var form = document.getElementById('form');
+var input = document.getElementById('input');
 
-
-// emit events
-
-btn.addEventListener('click', () => {
-  socket.emit('chat', {
-    message: message.value,
-    handle: handle.value
-  });
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (input.value) {
+    socket.emit('chat message', input.value);
+    input.value = '';
+  }
 });
 
-// listen for events
-
-socket.on('chat', (data) => {
-  output.innerHTML += '<p><strong>' + data.handle + ':</strong>' + data.message + '</p>';
+socket.on('chat message', (msg) => {
+  var item = document.createElement('li');
+  item.textContent = msg;
+  messages.appendChild(item);
+  window.scrollTo(0, document.body.scrollHeight);
 });
