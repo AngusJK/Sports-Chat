@@ -14,7 +14,6 @@ form.addEventListener('submit', (e) => {
 
 function addMessageToHTML(message) {
   const item = document.createElement('li');
-  console.log("new message added: " + message.text + " " + message.user);
   item.textContent = message.text;
   messages.append(item);
 }
@@ -27,4 +26,9 @@ function alertUserConnected() {
 
 socket.on('user connected', alertUserConnected);
 
+socket.on('newClientConnect', (data) => {
+  const item = document.createElement('li');
+  item.textContent = data.description;
+  messages.append(item);
+});
 // window.scrollTo(0, document.body.scrollHeight);
