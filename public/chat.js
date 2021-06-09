@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io('/my-namespace');
 
 var messages = document.getElementById('messages');
 var form = document.getElementById('form');
