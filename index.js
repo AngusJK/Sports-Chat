@@ -7,13 +7,14 @@ const path = require('path');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.get('/', (req, res) => {
-//   res.sendFile(__dirname + '/public/index.html');
-// });
-
+// tracks how many clients are connected to the server at any given time
 let numOfClients = 0;
+
+// creates custom namespace
+const nsp = io.of('/my-namespace');
+
 // listening for clients to connect
-io.on('connection', (socket) => {
+nsp.on('connection', (socket) => {
   // increment the number of clients when a client connects
   numOfClients++;
   // sends message event to client once they connect
@@ -24,7 +25,7 @@ io.on('connection', (socket) => {
   // listens for chat message to be emitted by a client
   socket.on('chat message', (msg) => {
     // sends message to all connected clients
-    io.emit('chat message', msg);
+    nsp.emit('chat message', msg);
   });
   // listens for disconnect event
   socket.on('disconnect', () => {
