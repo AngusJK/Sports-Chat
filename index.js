@@ -11,12 +11,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 //   res.sendFile(__dirname + '/public/index.html');
 // });
 
+let numOfClients = 0;
+
 io.on('connection', (socket) => {
+  numOfClients++;
+  socket.emit('newClientConnect', { description: "Hey, welcome to the chat!" });
+  socket.broadcast.emit('newClientConnect', { description: numOfClients + ' clients connected.'})
   console.log("a user connected: " + socket.id);
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);
   });
   socket.on('disconnect', () => {
+    numOfClients--;
+    socket.broadcast.emit('newClientConnect', { description: numOfClients + ' clients connected.'})
     console.log("a user gone and disconnected");
   })
 });
