@@ -1,4 +1,4 @@
-const socket = io('/my-namespace');
+const socket = io();
 
 var messages = document.getElementById('messages');
 var form = document.getElementById('form');
@@ -16,11 +16,19 @@ form.addEventListener('submit', (e) => {
 });
 
 // creates a list element which contains the submitted message and appends it to the document
+// function addMessageToHTML(message) {
+//   const item = document.createElement('li');
+//   item.textContent = message.text;
+//   messages.append(item);
+// }
+
 function addMessageToHTML(message) {
-  const item = document.createElement('li');
-  item.textContent = message.text;
-  messages.append(item);
-}
+  const div = document.createElement('div');
+  div.classList.add('message');
+  div.innerHTML = `<p class="meta">Angus<span>12:13pm</span></p>
+    <p class="text">${message.text}</p>`;
+  messages.appendChild(div);
+};
 
 // listens for chat message to be emitted from server and calls method to handle it
 socket.on('chat message', addMessageToHTML);
@@ -28,7 +36,7 @@ socket.on('chat message', addMessageToHTML);
 // passes user connected alert to addMessageToHTML method for rendering
 function alertUserConnected() {
   addMessageToHTML("User connected");
-}
+};
 
 // listens for user connected to be emitted from server, calls alert user method
 socket.on('user connected', alertUserConnected);
@@ -40,4 +48,7 @@ socket.on('newClientConnect', (data) => {
   messages.append(item);
 });
 
+socket.on('coonectToRoom', (data) => {
+  console.log(data);
+});
 // window.scrollTo(0, document.body.scrollHeight);
