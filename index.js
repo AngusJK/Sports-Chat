@@ -12,19 +12,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 // });
 
 let numOfClients = 0;
-
+// listening for clients to connect
 io.on('connection', (socket) => {
+  // increment the number of clients when a client connects
   numOfClients++;
+  // sends message event to client once they connect
   socket.emit('newClientConnect', { description: "Hey, welcome to the chat!" });
-  socket.broadcast.emit('newClientConnect', { description: numOfClients + ' clients connected.'})
+  // broadcasts message to all connected clients except the one triggering the event
+  socket.broadcast.emit('newClientConnect', { description: numOfClients + ' clients connected.'});
   console.log("a user connected: " + socket.id);
+  // listens for chat message to be emitted by a client
   socket.on('chat message', (msg) => {
+    // sends message to all connected clients
     io.emit('chat message', msg);
   });
+  // listens for disconnect event
   socket.on('disconnect', () => {
+    // decrements the number of connected clients
     numOfClients--;
+    // broadcasts message to all clients except the one who triggered the event (the one who left)
     socket.broadcast.emit('newClientConnect', { description: numOfClients + ' clients connected.'})
-    console.log("a user gone and disconnected");
+    console.log("a user has disconnected");
   })
 });
 
