@@ -9,12 +9,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // tracks how many clients are connected to the server at any given time
 let numOfClients = 0;
-
+// sets default room number to 1
+let roomno = 1;
 // creates custom namespace
-const nsp = io.of('/my-namespace');
+//const nsp = io.of('/my-namespace');
 
 // listening for clients to connect
-nsp.on('connection', (socket) => {
+io.on('connection', (socket) => {
+  // if current room is at capacity, create a new room
+  //if(io.of['/'].adapter.rooms['room-' + roomno] && io.of['/'].adapter.rooms['room-' + roomno].length > 2) roomno++;
+  // add newly connected user to specific room
+  socket.join('room-' + roomno);
+  // sends message to new client confirming which room they have been added to
+  socket.emit('coonectToRoom', 'You are in room number ' + roomno);
   // increment the number of clients when a client connects
   numOfClients++;
   // sends message event to client once they connect
@@ -25,7 +32,7 @@ nsp.on('connection', (socket) => {
   // listens for chat message to be emitted by a client
   socket.on('chat message', (msg) => {
     // sends message to all connected clients
-    nsp.emit('chat message', msg);
+    io.emit('chat message', msg);
   });
   // listens for disconnect event
   socket.on('disconnect', () => {
@@ -34,7 +41,7 @@ nsp.on('connection', (socket) => {
     // broadcasts message to all clients except the one who triggered the event (the one who left)
     socket.broadcast.emit('newClientConnect', { description: numOfClients + ' clients connected.'})
     console.log("a user has disconnected");
-  })
+  });
 });
 
 http.listen(PORT, () => {
