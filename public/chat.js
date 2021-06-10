@@ -10,7 +10,7 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
   // if there is data in the form, emit a chat message to the server along with clients socket id
   if (input.value) {
-    socket.emit('chat message', { text: input.value, user: socket.id });
+    socket.emit('chat message', input.value);
     input.value = '';
   }
 });
@@ -23,9 +23,10 @@ form.addEventListener('submit', (e) => {
 // }
 
 function addMessageToHTML(message) {
+  console.log(message);
   const div = document.createElement('div');
   div.classList.add('message');
-  div.innerHTML = `<p class="meta">Angus<span>12:13pm</span></p>
+  div.innerHTML = `<p class="meta">${message.username}<span>${message.time}</span></p>
     <p class="text">${message.text}</p>`;
   messages.appendChild(div);
 };
