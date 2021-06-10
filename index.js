@@ -4,9 +4,11 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const PORT = process.env.PORT || 3000;
 const path = require('path');
+const formatMessage = require('./utils/messages');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+const adminName = "Admin";
 // tracks how many clients are connected to the server at any given time
 let numOfClients = 0;
 // sets default room number to 1
@@ -21,7 +23,7 @@ io.on('connection', (socket) => {
   // add newly connected user to specific room
   socket.join('room-' + roomno);
   // sends message to new client confirming which room they have been added to
-  socket.emit('coonectToRoom', 'You are in room number ' + roomno);
+  socket.emit('coonectToRoom', formatMessage(adminName, 'You are in room number ' + roomno));
   // increment the number of clients when a client connects
   numOfClients++;
   // sends message event to client once they connect
@@ -32,7 +34,7 @@ io.on('connection', (socket) => {
   // listens for chat message to be emitted by a client
   socket.on('chat message', (msg) => {
     // sends message to all connected clients
-    io.emit('chat message', msg);
+    io.emit('chat message', formatMessage('USER', msg));
   });
   // listens for disconnect event
   socket.on('disconnect', () => {
