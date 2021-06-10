@@ -1,3 +1,4 @@
+const { on } = require('events');
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -35,6 +36,15 @@ io.on('connection', (socket) => {
   //   socket.join(roomname);
   //   cb(messages[roomname]);
   // })
+  socket.on('new-user', (data) => {
+    const user = {
+      username: data.username,
+      id: data.id
+    }
+    users.push(user);
+    console.log(users);
+    io.emit('new-user', user);
+  });
   // sends message to new client confirming which room they have been added to
   socket.emit('coonectToRoom', formatMessage(adminName, 'You are in room number ' + roomno));
   // increment the number of clients when a client connects
@@ -47,8 +57,9 @@ io.on('connection', (socket) => {
   // listens for chat message to be emitted by a client
   socket.on('chat message', (msg) => {
     // sends message to all connected clients
-    io.emit('chat message', formatMessage(msg.name, msg.text));
+    io.emit('chat message', formatMessage(msg.username, msg.text));
   });
+  
   // listens for disconnect event
   socket.on('disconnect', () => {
     // decrements the number of connected clients
