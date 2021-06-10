@@ -3,6 +3,7 @@ const socket = io();
 var messages = document.getElementById('messages');
 var form = document.getElementById('form');
 var input = document.getElementById('input');
+var user = document.getElementById('user');
 
 // adds event listener to form
 form.addEventListener('submit', (e) => {
@@ -10,7 +11,7 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
   // if there is data in the form, emit a chat message to the server along with clients socket id
   if (input.value) {
-    socket.emit('chat message', input.value);
+    socket.emit('chat message', { text: input.value, name: user.value });
     input.value = '';
   }
 });
@@ -26,7 +27,7 @@ function addMessageToHTML(message) {
   console.log(message);
   const div = document.createElement('div');
   div.classList.add('message');
-  div.innerHTML = `<p class="meta">${message.username}<span>${message.time}</span></p>
+  div.innerHTML = `<p class="meta">${message.username} <span>${message.time}</span></p>
     <p class="text">${message.text}</p>`;
   messages.appendChild(div);
 };
