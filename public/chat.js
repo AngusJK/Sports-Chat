@@ -1,18 +1,24 @@
 const socket = io();
 
-var messages = document.getElementById('messages');
-var form = document.getElementById('form');
-var input = document.getElementById('input');
-var user = document.getElementById('user');
+var messages = document.getElementById('message-container');
+var chatform = document.getElementById('chat-form');
+var chatinput = document.getElementById('chat-input');
+var signinform = document.getElementById('sign-in-form');
+var signininput = document.getElementById('sign-in-input');
+let currentUser = '';
 
+signinform.addEventListener('submit', (e) => {
+  e.preventDefault();
+  socket.emit('new-user', { username: signininput.value, id: socket.id });
+});
 // adds event listener to form
-form.addEventListener('submit', (e) => {
+chatform.addEventListener('submit', (e) => {
   // prevents form from automatically submitting to a file
   e.preventDefault();
   // if there is data in the form, emit a chat message to the server along with clients socket id
-  if (input.value) {
-    socket.emit('chat message', { text: input.value, name: user.value });
-    input.value = '';
+  if (chatinput.value) {
+    socket.emit('chat message', { text: chatinput.value, username: currentUser });
+    chatinput.value = '';
   }
 });
 
@@ -34,6 +40,14 @@ function addMessageToHTML(message) {
 
 // listens for chat message to be emitted from server and calls method to handle it
 socket.on('chat message', addMessageToHTML);
+
+socket.on('new-user', (user) => {
+  currentUser = user.username
+  const div = document.createElement('div');
+  div.classList.add('message');
+  div.innerHTML = `<p>${currentUser} has joined the chat.</p>`;
+  messages.appendChild(div);
+});
 
 // passes user connected alert to addMessageToHTML method for rendering
 function alertUserConnected() {
