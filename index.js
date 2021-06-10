@@ -11,6 +11,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 const adminName = "Admin";
 // tracks how many clients are connected to the server at any given time
 let numOfClients = 0;
+// array of connected clients
+let users = [];
 // sets default room number to 1
 let roomno = 1;
 // creates custom namespace
@@ -21,7 +23,18 @@ io.on('connection', (socket) => {
   // if current room is at capacity, create a new room
   //if(io.of['/'].adapter.rooms['room-' + roomno] && io.of['/'].adapter.rooms['room-' + roomno].length > 2) roomno++;
   // add newly connected user to specific room
-  socket.join('room-' + roomno);
+  // socket.on('join server', (username) => {
+  //   const user = {
+  //     username,
+  //     id: socket.id
+  //   }
+  //   users.push(user);
+  //   io.emit('new user', users);
+  // });
+  // socket.on('join room', (roomname, cb) => {
+  //   socket.join(roomname);
+  //   cb(messages[roomname]);
+  // })
   // sends message to new client confirming which room they have been added to
   socket.emit('coonectToRoom', formatMessage(adminName, 'You are in room number ' + roomno));
   // increment the number of clients when a client connects
@@ -34,7 +47,7 @@ io.on('connection', (socket) => {
   // listens for chat message to be emitted by a client
   socket.on('chat message', (msg) => {
     // sends message to all connected clients
-    io.emit('chat message', formatMessage('USER', msg));
+    io.emit('chat message', formatMessage(msg.name, msg.text));
   });
   // listens for disconnect event
   socket.on('disconnect', () => {
