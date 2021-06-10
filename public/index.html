@@ -8,10 +8,13 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="messages"></div>
-  <form id="form" action="">
-    <input type="text" placeholder="name" id="user" />
-    <input id="input" autocomplete="off" />
+  <form id="sign-in-form" action="">
+    <input id="sign-in-input" type="text" placeholder="enter your name">
+    <button>Submit</button>
+  </form>
+  <div id="message-container"></div>
+  <form id="chat-form" action="">
+    <input id="chat-input" autocomplete="off" />
     <button>Send</button>
   </form>
   <script src="/socket.io/socket.io.js"></script>
