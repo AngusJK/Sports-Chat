@@ -1,5 +1,5 @@
 body { 
-  margin: 0; 
+  margin: 10; 
   padding-bottom: 3rem; 
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
 }
@@ -54,4 +54,6 @@ body {
 
 .post {
   background-color: lightblue;
+  padding: 4px;
+  border-radius: 3px;
 }
