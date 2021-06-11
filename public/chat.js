@@ -34,10 +34,12 @@ chatform.addEventListener('submit', (e) => {
 // }
 
 function addMessageToHTML(message) {
-  console.log(message);
+  let selfClass = "";
+  if(message.id === socket.id) {selfClass = "self"};
+  console.log(selfClass);
   const div = document.createElement('div');
   div.classList.add('message');
-  div.innerHTML = `<div class="post"><p class="meta">${message.username} <span>${message.time}</span></p>
+  div.innerHTML = `<div class="post ${selfClass}"><p class="meta">${message.username} <span>${message.time}</span></p>
     <p class="text">${message.text}</p></div>`;
   messages.appendChild(div);
 };
