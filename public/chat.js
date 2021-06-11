@@ -17,7 +17,7 @@ chatform.addEventListener('submit', (e) => {
   e.preventDefault();
   // if there is data in the form, emit a chat message to the server along with clients socket id
   if (chatinput.value) {
-    socket.emit('chat message', { text: chatinput.value, username: currentUser });
+    socket.emit('chat message', { text: chatinput.value, id: socket.id });
     chatinput.value = '';
   }
 });
