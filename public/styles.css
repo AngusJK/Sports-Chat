@@ -51,6 +51,11 @@ body {
 .meta {
   font-size: smaller;
   font-weight: lighter;
+  margin: 2px;
+}
+
+.text {
+  margin: 2px;
 }
 
 .post {
@@ -62,4 +67,5 @@ body {
 
 .self {
   text-align: right;
+  background-color: lightgreen;
 }
