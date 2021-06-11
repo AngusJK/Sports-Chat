@@ -37,8 +37,8 @@ function addMessageToHTML(message) {
   console.log(message);
   const div = document.createElement('div');
   div.classList.add('message');
-  div.innerHTML = `<p class="meta">${message.username} <span>${message.time}</span></p>
-    <p class="text">${message.text}</p>`;
+  div.innerHTML = `<div class="post"><p class="meta">${message.username} <span>${message.time}</span></p>
+    <p class="text">${message.text}</p></div>`;
   messages.appendChild(div);
 };
 
@@ -62,9 +62,13 @@ socket.on('user connected', alertUserConnected);
 
 // listens for newClientConnect from server, creates list element to render data
 socket.on('newClientConnect', (data) => {
-  const item = document.createElement('li');
-  item.textContent = data.description;
-  messages.append(item);
+  const div = document.createElement('div');
+  div.classList.add('message');
+  div.innerHTML = `<p class="meta">${data.description}</p>`;
+  messages.appendChild(div);
+  // const item = document.createElement('li');
+  // item.textContent = data.description;
+  // messages.append(item);
 });
 
 socket.on('coonectToRoom', (data) => {
