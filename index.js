@@ -52,7 +52,7 @@ io.on('connection', (socket) => {
   // sends message event to client once they connect
   // socket.emit('newClientConnect', { description: "Hey, welcome to the chat!" });
   // broadcasts message to all connected clients except the one triggering the event
-  socket.broadcast.emit('newClientConnect', { description: numOfClients + ' clients connected.'});
+  io.emit('newClientConnect', { description: numOfClients + ' clients connected.'});
   console.log("a user connected: " + socket.id);
   // listens for chat message to be emitted by a client
   socket.on('chat message', (msg) => {
@@ -66,7 +66,16 @@ io.on('connection', (socket) => {
     // decrements the number of connected clients
     numOfClients--;
     // broadcasts message to all clients except the one who triggered the event (the one who left)
-    socket.broadcast.emit('newClientConnect', { description: numOfClients + ' clients connected.'})
+    socket.broadcast.emit('newClientConnect', { description: numOfClients + ' clients connected.'});
+    console.log(socket.id);
+    let user; 
+    if(users.find(user => user.id === socket.id)) {
+      user = users.find(user => user.id === socket.id);
+      socket.broadcast.emit('new-user', { msg: `${user.username} has left the chat.` });
+    } else {
+      socket.broadcast.emit('new-user', { msg: 'A user has left the chat.' });
+    };
+    console.log(user);
     console.log("a user has disconnected");
   });
 });
