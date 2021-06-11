@@ -42,14 +42,15 @@ io.on('connection', (socket) => {
       id: data.id
     }
     users.push(user);
-    io.emit('new-user', user);
+    socket.broadcast.emit('new-user', { msg: `${user.username} has joined the chat.`, user: user });
+    io.to(user.id).emit('new-user', { msg: `Welcome to the chat, ${user.username}.`, user: user });
   });
   // sends message to new client confirming which room they have been added to
   socket.emit('coonectToRoom', formatMessage(adminName, 'You are in room number ' + roomno));
   // increment the number of clients when a client connects
   numOfClients++;
   // sends message event to client once they connect
-  socket.emit('newClientConnect', { description: "Hey, welcome to the chat!" });
+  // socket.emit('newClientConnect', { description: "Hey, welcome to the chat!" });
   // broadcasts message to all connected clients except the one triggering the event
   socket.broadcast.emit('newClientConnect', { description: numOfClients + ' clients connected.'});
   console.log("a user connected: " + socket.id);
