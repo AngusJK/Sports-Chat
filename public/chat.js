@@ -6,6 +6,7 @@ var chatinput = document.getElementById('chat-input');
 var signinform = document.getElementById('sign-in-form');
 var signininput = document.getElementById('sign-in-input');
 var signinbutton = document.getElementById('sign-in-submit');
+var clients = document.getElementById('clients');
 let currentUser = '';
 
 signinform.addEventListener('submit', (e) => {
@@ -36,7 +37,6 @@ chatform.addEventListener('submit', (e) => {
 function addMessageToHTML(message) {
   let selfClass = "";
   if(message.id === socket.id) {selfClass = "self"};
-  console.log(selfClass);
   const div = document.createElement('div');
   div.classList.add('message');
   div.innerHTML = `<div class="post ${selfClass}"><p class="meta">${message.username} <span>${message.time}</span></p>
@@ -64,10 +64,7 @@ socket.on('user connected', alertUserConnected);
 
 // listens for newClientConnect from server, creates list element to render data
 socket.on('newClientConnect', (data) => {
-  const div = document.createElement('div');
-  div.classList.add('message');
-  div.innerHTML = `<p class="meta">${data.description}</p>`;
-  messages.appendChild(div);
+  clients.innerHTML = data.description;
   // const item = document.createElement('li');
   // item.textContent = data.description;
   // messages.append(item);
