@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
     io.to(user.id).emit('new-user', { msg: `Welcome to the chat, ${user.username}.`, user: user });
   });
   // sends message to new client confirming which room they have been added to
-  socket.emit('coonectToRoom', formatMessage(adminName, 'You are in room number ' + roomno));
+  socket.emit('coonectToRoom', formatMessage(adminName, null, 'You are in room number ' + roomno));
   // increment the number of clients when a client connects
   numOfClients++;
   // sends message event to client once they connect
@@ -57,11 +57,8 @@ io.on('connection', (socket) => {
   // listens for chat message to be emitted by a client
   socket.on('chat message', (msg) => {
     // sends message to all connected clients
-    console.log(msg.id);
-    console.log(users);
     let user = users.find(user => user.id === msg.id);
-    console.log(user);
-    io.emit('chat message', formatMessage(user.username, msg.text));
+    io.emit('chat message', formatMessage(user.username, user.id, msg.text));
   });
   
   // listens for disconnect event
