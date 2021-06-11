@@ -59,3 +59,7 @@ body {
   border-radius: 3px;
   margin: 3px;
 }
+
+.self {
+  text-align: right;
+}
