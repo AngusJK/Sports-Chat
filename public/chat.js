@@ -5,11 +5,15 @@ var chatform = document.getElementById('chat-form');
 var chatinput = document.getElementById('chat-input');
 var signinform = document.getElementById('sign-in-form');
 var signininput = document.getElementById('sign-in-input');
+var signinbutton = document.getElementById('sign-in-submit');
 let currentUser = '';
 
 signinform.addEventListener('submit', (e) => {
   e.preventDefault();
   socket.emit('new-user', { username: signininput.value, id: socket.id });
+  signininput.value = '';
+  signininput.disabled = true;
+  signinbutton.disabled = true;
 });
 // adds event listener to form
 chatform.addEventListener('submit', (e) => {
@@ -41,11 +45,10 @@ function addMessageToHTML(message) {
 // listens for chat message to be emitted from server and calls method to handle it
 socket.on('chat message', addMessageToHTML);
 
-socket.on('new-user', (user) => {
-  currentUser = user.username
+socket.on('new-user', (data) => {
   const div = document.createElement('div');
   div.classList.add('message');
-  div.innerHTML = `<p>${currentUser} has joined the chat.</p>`;
+  div.innerHTML = `<p class="meta">${data.msg}</p>`;
   messages.appendChild(div);
 });
 
