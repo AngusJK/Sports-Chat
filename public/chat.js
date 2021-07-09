@@ -42,6 +42,7 @@ function addMessageToHTML(message) {
   div.innerHTML = `<div class="post ${selfClass}"><p class="meta">${message.username} <span>${message.time}</span></p>
     <p class="text">${message.text}</p></div>`;
   messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
 };
 
 // listens for chat message to be emitted from server and calls method to handle it
