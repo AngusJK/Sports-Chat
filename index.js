@@ -52,7 +52,7 @@ io.on('connection', (socket) => {
   // sends message event to client once they connect
   // socket.emit('newClientConnect', { description: "Hey, welcome to the chat!" });
   // broadcasts message to all connected clients except the one triggering the event
-  io.emit('newClientConnect', { description: numOfClients + ' clients connected.'});
+  io.emit('newClientConnect', { description: numOfClients + ' clients connected'});
   console.log("a user connected: " + socket.id);
   // listens for chat message to be emitted by a client
   socket.on('chat message', (msg) => {
