@@ -1,4 +1,9 @@
 const socket = io();
+const { username, room } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true
+});
+
+console.log(username, room);
 
 var messages = document.getElementById('message-container');
 var chatform = document.getElementById('chat-form');
