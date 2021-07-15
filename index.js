@@ -41,9 +41,13 @@ io.on('connection', (socket) => {
 
     const user = userJoin(socket.id, username, room);
     socket.join(user.room);
-    socket.emit('connectToRoom', formatMessage(adminName, null, `You are in the ${room} room.`));
-    
+    socket.emit('connectToRoom', formatMessage(adminName, null, `Hi ${username}. Welcome to the ${room.toLowerCase()} room.`));
 
+    socket.on('chat message', (msg) => {
+      // sends message to all connected clients
+      let user = getUser(msg.id);
+      io.emit('chat message', formatMessage(user.username, user.id, msg.text));
+    });
 
 
     io.emit('newClientConnect', { description: numOfClients + ' clients connected'});
@@ -68,11 +72,7 @@ io.on('connection', (socket) => {
   // broadcasts message to all connected clients except the one triggering the event
   
   // listens for chat message to be emitted by a client
-  socket.on('chat message', (msg) => {
-    // sends message to all connected clients
-    let user = users.find(user => user.id === msg.id);
-    io.emit('chat message', formatMessage(user.username, user.id, msg.text));
-  });
+  
   
   // listens for disconnect event
   socket.on('disconnect', () => {
