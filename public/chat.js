@@ -3,17 +3,19 @@ const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true
 });
 
-console.log(username, room);
+let currentUserId = '';
+
 
 var messages = document.getElementById('message-container');
 var chatform = document.getElementById('chat-form');
 var chatinput = document.getElementById('chat-input');
-var signinform = document.getElementById('sign-in-form');
-var signininput = document.getElementById('sign-in-input');
-var signinbutton = document.getElementById('sign-in-submit');
+//var signinform = document.getElementById('sign-in-form');
+//var signininput = document.getElementById('sign-in-input');
+//var signinbutton = document.getElementById('sign-in-submit');
 var clients = document.getElementById('clients');
 let currentUser = '';
 
+/*
 signinform.addEventListener('submit', (e) => {
   e.preventDefault();
   socket.emit('new-user', { username: signininput.value, id: socket.id });
@@ -21,13 +23,19 @@ signinform.addEventListener('submit', (e) => {
   signininput.disabled = true;
   signinbutton.disabled = true;
 });
+*/
 // adds event listener to form
+
+console.log(username, room);
+socket.emit('join-room', { username, room });
+
 chatform.addEventListener('submit', (e) => {
   // prevents form from automatically submitting to a file
   e.preventDefault();
   // if there is data in the form, emit a chat message to the server along with clients socket id
   if (chatinput.value) {
-    socket.emit('chat message', { text: chatinput.value, id: socket.id });
+    console.log(chatinput.value);
+    //socket.emit('chat message', { text: chatinput.value, id: socket.id });
     chatinput.value = '';
   }
 });
@@ -76,7 +84,7 @@ socket.on('newClientConnect', (data) => {
   // messages.append(item);
 });
 
-socket.on('coonectToRoom', (data) => {
+socket.on('connectToRoom', (data) => {
   console.log(data);
 });
 // window.scrollTo(0, document.body.scrollHeight);
