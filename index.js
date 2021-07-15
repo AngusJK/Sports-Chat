@@ -6,6 +6,7 @@ const io = require('socket.io')(http);
 const PORT = process.env.PORT || 3000;
 const path = require('path');
 const formatMessage = require('./utils/messages');
+const { userJoin, getUser } = require('./utils/users.js');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -36,24 +37,36 @@ io.on('connection', (socket) => {
   //   socket.join(roomname);
   //   cb(messages[roomname]);
   // })
-  socket.on('new-user', (data) => {
-    const user = {
-      username: data.username,
-      id: data.id
-    }
-    users.push(user);
-    socket.broadcast.emit('new-user', { msg: `${user.username} has joined the chat.`, user: user });
-    io.to(user.id).emit('new-user', { msg: `Welcome to the chat, ${user.username}.`, user: user });
-  });
+  socket.on('join-room', ({username, room}) => {
+
+    const user = userJoin(socket.id, username, room);
+    socket.join(user.room);
+    socket.emit('connectToRoom', formatMessage(adminName, null, `You are in the ${room} room.`));
+    
+
+
+
+    io.emit('newClientConnect', { description: numOfClients + ' clients connected'});
+    console.log("a user connected: " + socket.id);
+    socket.on('new-user', (data) => {
+      const user = {
+        username: data.username,
+        id: data.id
+      }
+      users.push(user);
+      socket.broadcast.emit('new-user', { msg: `${user.username} has joined the chat.`, user: user });
+      io.to(user.id).emit('new-user', { msg: `Welcome to the chat, ${user.username}.`, user: user });
+    });
+  })
+  
   // sends message to new client confirming which room they have been added to
-  socket.emit('coonectToRoom', formatMessage(adminName, null, 'You are in room number ' + roomno));
+  
   // increment the number of clients when a client connects
   numOfClients++;
   // sends message event to client once they connect
   // socket.emit('newClientConnect', { description: "Hey, welcome to the chat!" });
   // broadcasts message to all connected clients except the one triggering the event
-  io.emit('newClientConnect', { description: numOfClients + ' clients connected'});
-  console.log("a user connected: " + socket.id);
+  
   // listens for chat message to be emitted by a client
   socket.on('chat message', (msg) => {
     // sends message to all connected clients
@@ -81,7 +94,7 @@ io.on('connection', (socket) => {
 });
 
 http.listen(PORT, () => {
-  console.log(`Chat app listening on port ${PORT}...`);
+  console.log(`Sports Chat listening on port ${PORT}...`);
 });
 
 
