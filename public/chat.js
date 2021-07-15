@@ -13,6 +13,7 @@ var chatinput = document.getElementById('chat-input');
 //var signininput = document.getElementById('sign-in-input');
 //var signinbutton = document.getElementById('sign-in-submit');
 var clients = document.getElementById('clients');
+var roomName = document.getElementById('room-name');
 let currentUser = '';
 
 /*
@@ -26,16 +27,15 @@ signinform.addEventListener('submit', (e) => {
 */
 // adds event listener to form
 
-console.log(username, room);
 socket.emit('join-room', { username, room });
+
 
 chatform.addEventListener('submit', (e) => {
   // prevents form from automatically submitting to a file
   e.preventDefault();
   // if there is data in the form, emit a chat message to the server along with clients socket id
   if (chatinput.value) {
-    console.log(chatinput.value);
-    //socket.emit('chat message', { text: chatinput.value, id: socket.id });
+    socket.emit('chat message', { text: chatinput.value, id: socket.id });
     chatinput.value = '';
   }
 });
@@ -59,7 +59,9 @@ function addMessageToHTML(message) {
 };
 
 // listens for chat message to be emitted from server and calls method to handle it
-socket.on('chat message', addMessageToHTML);
+socket.on('chat message', (message) => { 
+  addMessageToHTML(message);
+});
 
 socket.on('new-user', (data) => {
   const div = document.createElement('div');
@@ -85,6 +87,7 @@ socket.on('newClientConnect', (data) => {
 });
 
 socket.on('connectToRoom', (data) => {
-  console.log(data);
+  addMessageToHTML(data);
+  roomName.innerHTML = room;
 });
 // window.scrollTo(0, document.body.scrollHeight);
