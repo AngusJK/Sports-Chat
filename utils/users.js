@@ -10,8 +10,11 @@ function getUser(id) {
   return users.find(user => user.id === id);
 };
 
-function getNumberOfUsers() {
-  return users.length
+function getNumberOfUsers(room) {
+  let currentRoomUsers = users.filter(user => user.room === room);
+  console.log(room);
+  console.log(currentRoomUsers);
+  return currentRoomUsers.length;
 }
 module.exports = {
   userJoin,
