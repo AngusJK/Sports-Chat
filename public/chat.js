@@ -40,8 +40,6 @@ socket.on('chat message', (message) => {
 });
 
 socket.on('new-user', (data) => {
-  console.log(data);
-  
   if (data.user.username != username) {
   const div = document.createElement('div');
   div.classList.add('message');
@@ -61,7 +59,13 @@ socket.on('connectToRoom', (data) => {
   roomName.innerHTML = room;
 });
 
-leave.addEventListener('leave room', (e) => {
-  e.preventDefault();
-  console.log(e);
+socket.on('past messages', (msgs) => {
+  console.log(msgs);
+  for (let msg of msgs) {
+    addMessageToHTML(msg);
+  }
+});
+
+leave.addEventListener('click', () => {
+  window.location = './index.html';
 });
