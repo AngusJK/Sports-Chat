@@ -5,7 +5,7 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const PORT = process.env.PORT || 3000;
 const path = require('path');
-const formatMessage = require('./utils/messages');
+const { formatMessage, saveMessage, getMessages } = require('./utils/messages');
 const { userJoin, userLeave, getUser, getNumberOfUsers } = require('./utils/users.js');
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -18,10 +18,15 @@ io.on('connection', (socket) => {
     const user = userJoin(socket.id, username, room);
     socket.join(user.room);
     socket.emit('connectToRoom', formatMessage(adminName, null, `Hi ${username}. Welcome to the ${room.toLowerCase()} room.`));
+    let msgs = getMessages(room);
+    if(msgs.length > 0) {
+      socket.emit('past messages', msgs);
+    };
     io.to(room).emit('new-user', { msg: `${user.username} has joined the room.`, user: user });
     socket.on('chat message', (msg) => {
       // sends message to all clients in current room
       let currentUser = getUser(msg.id);
+      saveMessage(room, currentUser.username, currentUser.id, msg.text);
       io.to(currentUser.room).emit('chat message', formatMessage(currentUser.username, currentUser.id, msg.text));
     });
     let numOfClients = getNumberOfUsers(room);
