@@ -40,6 +40,8 @@ socket.on('chat message', (message) => {
 });
 
 socket.on('new-user', (data) => {
+  console.log(data);
+  
   if (data.user.username != username) {
   const div = document.createElement('div');
   div.classList.add('message');
