@@ -25,7 +25,7 @@ io.on('connection', (socket) => {
       io.to(currentUser.room).emit('chat message', formatMessage(currentUser.username, currentUser.id, msg.text));
     });
     let numOfClients = getNumberOfUsers(room);
-    io.to(room).emit('newClientConnect', { description: numOfClients + ' clients connected'});
+    io.to(room).emit('newClientConnect', { description: numOfClients + ' people in the chat'});
     console.log("a user connected: " + socket.id);
     /*
     socket.on('new-user', (data) => {
@@ -40,11 +40,13 @@ io.on('connection', (socket) => {
     */
     socket.on('disconnect', () => {
       // broadcasts message to all clients except the one who triggered the event (the one who left)
-      const user = userLeave(socket.id);
-      io.to(room).emit('newClientConnect', { description: numOfClients + ' clients connected'});
-      console.log("a user left the room: " + socket.id);
+      const user = getUser(socket.id);
+      userLeave(socket.id);
+      console.log("a user left the room: " + user.username);
       //let user = getUser(socket.id);
-      io.to(room).emit('new-user', { msg: `${username} has left the room.`, user: user });
+      io.to(room).emit('new-user', { msg: `${user.username} has left the room.`, user: user });
+      let numOfClients = getNumberOfUsers(user.room);
+      io.to(room).emit('newClientConnect', { description: numOfClients + ' people in the chat'});
       console.log("a user has disconnected");
     });
   });
