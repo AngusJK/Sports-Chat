@@ -10,7 +10,11 @@ function getUser(id) {
   return users.find(user => user.id === id);
 };
 
+function getNumberOfUsers() {
+  return users.length
+}
 module.exports = {
   userJoin,
-  getUser
+  getUser,
+  getNumberOfUsers
 }
