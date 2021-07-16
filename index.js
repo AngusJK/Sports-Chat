@@ -18,6 +18,7 @@ io.on('connection', (socket) => {
     const user = userJoin(socket.id, username, room);
     socket.join(user.room);
     socket.emit('connectToRoom', formatMessage(adminName, null, `Hi ${username}. Welcome to the ${room.toLowerCase()} room.`));
+    io.to(room).emit('new-user', { msg: `${user.username} has joined the chat.`, user: user });
     socket.on('chat message', (msg) => {
       // sends message to all clients in current room
       let currentUser = getUser(msg.id);
@@ -26,16 +27,17 @@ io.on('connection', (socket) => {
     let numOfClients = getNumberOfUsers(room);
     io.to(room).emit('newClientConnect', { description: numOfClients + ' clients connected'});
     console.log("a user connected: " + socket.id);
+    /*
     socket.on('new-user', (data) => {
       const user = {
         username: data.username,
         id: data.id
       }
       users.push(user);
-      socket.broadcast.emit('new-user', { msg: `${user.username} has joined the chat.`, user: user });
+      io.to(user.room).emit('new-user', { msg: `${user.username} has joined the chat.`, user: user });
       io.to(user.id).emit('new-user', { msg: `Welcome to the chat, ${user.username}.`, user: user });
     });
-
+    */
     socket.on('disconnect', () => {
       // broadcasts message to all clients except the one who triggered the event (the one who left)
       socket.to(room).emit('newClientConnect', { description: numOfClients + ' clients connected.'});
