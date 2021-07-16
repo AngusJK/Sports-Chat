@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
       let currentUser = getUser(msg.id);
       io.to(currentUser.room).emit('chat message', formatMessage(currentUser.username, currentUser.id, msg.text));
     });
-    let numOfClients = getNumberOfUsers();
+    let numOfClients = getNumberOfUsers(room);
     io.to(room).emit('newClientConnect', { description: numOfClients + ' clients connected'});
     console.log("a user connected: " + socket.id);
     socket.on('new-user', (data) => {
