@@ -6,7 +6,7 @@ const io = require('socket.io')(http);
 const PORT = process.env.PORT || 3000;
 const path = require('path');
 const formatMessage = require('./utils/messages');
-const { userJoin, getUser, getNumberOfUsers } = require('./utils/users.js');
+const { userJoin, userLeave, getUser, getNumberOfUsers } = require('./utils/users.js');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -18,7 +18,7 @@ io.on('connection', (socket) => {
     const user = userJoin(socket.id, username, room);
     socket.join(user.room);
     socket.emit('connectToRoom', formatMessage(adminName, null, `Hi ${username}. Welcome to the ${room.toLowerCase()} room.`));
-    io.to(room).emit('new-user', { msg: `${user.username} has joined the chat.`, user: user });
+    io.to(room).emit('new-user', { msg: `${user.username} has joined the room.`, user: user });
     socket.on('chat message', (msg) => {
       // sends message to all clients in current room
       let currentUser = getUser(msg.id);
@@ -40,14 +40,11 @@ io.on('connection', (socket) => {
     */
     socket.on('disconnect', () => {
       // broadcasts message to all clients except the one who triggered the event (the one who left)
-      socket.to(room).emit('newClientConnect', { description: numOfClients + ' clients connected.'});
-      console.log(socket.id);
-      if(getUser(socket.id)) {
-        let user = getUser(socket.id);
-        socket.broadcast.emit('new-user', { msg: `${user.username} has left the chat.` });
-      } else {
-        socket.broadcast.emit('new-user', { msg: 'A user has left the chat.' });
-      };
+      const user = userLeave(socket.id);
+      io.to(room).emit('newClientConnect', { description: numOfClients + ' clients connected'});
+      console.log("a user left the room: " + socket.id);
+      //let user = getUser(socket.id);
+      io.to(room).emit('new-user', { msg: `${username} has left the room.`, user: user });
       console.log("a user has disconnected");
     });
   });
