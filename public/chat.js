@@ -8,6 +8,7 @@ var chatform = document.getElementById('chat-form');
 var chatinput = document.getElementById('chat-input');
 var clients = document.getElementById('clients');
 var roomName = document.getElementById('room-name');
+var leave = document.getElementById('leave');
 
 function addMessageToHTML(message) {
   let selfClass = "";
@@ -39,10 +40,12 @@ socket.on('chat message', (message) => {
 });
 
 socket.on('new-user', (data) => {
+  if (data.user.username != username) {
   const div = document.createElement('div');
   div.classList.add('message');
   div.innerHTML = `<p class="meta">${data.msg}</p>`;
   messages.appendChild(div);
+  }
 });
 
 socket.on('user connected', alertUserConnected);
@@ -54,4 +57,9 @@ socket.on('newClientConnect', (data) => {
 socket.on('connectToRoom', (data) => {
   addMessageToHTML(data);
   roomName.innerHTML = room;
+});
+
+leave.addEventListener('leave room', (e) => {
+  e.preventDefault();
+  console.log(e);
 });
