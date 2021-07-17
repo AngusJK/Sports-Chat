@@ -5,29 +5,39 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign In Page</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="join-container">
     <header>
-      <h1>Sports Chat</h1>
+      <h1><span id="sports">SPORTS</span><span id="chat">Chat</span></h1>
     </header>
     <main>
       <form action="chat.html">
         <div class="form-control">
-          <label for="username">Username</label>
-          <input type="text" name="username" id="username" placeholder="Enter username..." autocomplete="off" required>
+          <input type="text" name="username" id="username" placeholder="Name" autocomplete="off" required>
         </div>
-        <div class="form-control">
-          <label for="room">Room</label>
-          <select name="room" id="room">
-            <option value="Baseball">Baseball</option>
-            <option value="Basketball">Basketball</option>
-            <option value="Hockey">Hockey</option>
-            <option value="Soccer">Soccer</option>
-            <option value="Tennis">Tennis</option>
-          </select>
+
+        <div class="sport-select-form">
+
+          <input type="radio" id="baseball-select" name="room" value="Baseball" required>
+          <label class="sport-option" for="baseball-select">Baseball</label><br>
+
+          <input type="radio" id="basketball-select" name="room" value="Basketball">
+          <label class="sport-option" for="basketball-select">Basketball</label><br>
+
+          <input type="radio" id="hockey-select" name="room" value="Hockey">
+          <label class="sport-option" for="hockey-select">Hockey</label><br>
+
+          <input type="radio" id="soccer-select" name="room" value="Soccer">
+          <label class="sport-option" for="soccer-select">Soccer</label><br>
+
+          <input type="radio" id="tennis-select" name="room" value="Tennis">
+          <label class="sport-option" for="tennis-select">Tennis</label><br>
+
         </div>
-        <button type="submit">Submit</button>
+
+        <button type="submit" class="btn">Submit</button>
       </form>
     </main>
   </div>
