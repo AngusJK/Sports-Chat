@@ -1,8 +1,15 @@
 body { 
   margin: 10; 
   padding-bottom: 3rem;
-  background-color: rgb(20, 20, 129); 
+  background-image: url('https://www.easygrass.net/wp-content/uploads/2015/07/artificial-grass-and-turf-background-by-easygrass.jpg');
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+}
+
+.join-container {
+  background-color: white;
+  height: 80%;
+  margin: 10%;
+  padding: 10px;
 }
 
 #window {
@@ -21,15 +28,13 @@ body {
   width: 70%;
 }
 
-
-#chat-form > button { 
-  background: #333; 
-  border: none; 
-  padding: 0 1rem; 
-  margin: 0.25rem; 
-  border-radius: 3px; 
-  outline: none; 
-  color: #fff; 
+#btn {
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  background-color: cornflowerblue;
+  outline: none;
+  margin: 2px;
 }
 
 #message-container { 
@@ -40,6 +45,46 @@ body {
   margin: 0 auto; 
   padding: 0; 
   overflow-y: scroll;
+}
+
+#username {
+  border: 0;
+  border-bottom: 2px solid gray;
+  width: 80%;
+  padding: 3px;
+  margin: 3px;
+  font-size: 1.5rem;
+}
+
+#username:focus {
+  outline: 0;
+  border-color: rgb(28, 219, 28);
+  font-weight: 700;
+  background-color: rgb(200, 223, 194);
+}
+
+.sport-select-form input[type="radio"] {
+  opacity: 0;
+  position: fixed;
+  width: 0;
+}
+
+.sport-select-form label {
+  display: inline-block;
+  background-color: #ddd;
+  padding: 10px 20px;
+  font-size: 16px;
+  width: 90px;
+  margin: 5px;
+}
+
+.sport-select-form input[type="radio"]:checked + label {
+  background-color: #bfb;
+  border-color: #4c4;
+}
+
+.sport-select-form label:hover {
+  background-color: #dfd;
 }
 
 .meta {
