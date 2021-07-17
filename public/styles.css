@@ -1,3 +1,5 @@
+/* global styles */
+
 body { 
   margin: 10; 
   padding-bottom: 3rem;
@@ -10,11 +12,27 @@ body {
   height: 550px;
   margin: 10%;
   padding: 10px;
+  border-radius: 5px;
 }
 
-.chat-page {
-  background-color: thistle;
+.btn {
+  border: none;
+  border-radius: 3px;
+  padding: 10px;
+  background-color: rgb(237, 100, 219);
+  outline: none;
+  margin: 2px;
+  opacity: 82%;
+  font-weight: 700;
+  color: white;
 }
+
+.btn:hover {
+  opacity: 100%;
+  cursor: default;
+}
+
+/* index.html styles */
 
 .form-control {
   margin-bottom: 20px;
@@ -31,60 +49,6 @@ body {
   font-size: 90px;
 }
 
-#window {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 70%;
-  height: 400px;
-  margin: 0 auto;
-  background-color: lightskyblue;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-#chat-input {
-  width: 60%;
-  height: 35px;
-  font-size: 22px;
-  padding: 2px 5px;
-}
-
-#chat-input:focus {
-  outline: 0;
-}
-
-.btn {
-  border: none;
-  border-radius: 3px;
-  padding: 10px;
-  background-color: rgb(237, 100, 219);
-  outline: none;
-  margin: 2px;
-  opacity: 82%;
-  font-weight: 700;
-  color: white;
-}
-
-.join {
-  margin-top: 20px;
-}
-
-.btn:hover {
-  opacity: 100%;
-  cursor: default;
-}
-
-#message-container { 
-  background-color: white;
-  list-style-type: none;
-  height: 300px;
-  width: 100%;
-  margin: 10px 0; 
-  padding: 0; 
-  overflow-y: scroll;
-}
-
 #username {
   border: 0;
   border-bottom: 2px solid gray;
@@ -92,6 +56,10 @@ body {
   padding: 3px;
   margin: 3px;
   font-size: 1.5rem;
+}
+
+.join {
+  margin-top: 20px;
 }
 
 #username:focus {
@@ -123,6 +91,47 @@ body {
   background-color: #dfd;
 }
 
+/* chat.html styles */
+
+.chat-page {
+  background-color: thistle;
+}
+
+#window {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 70%;
+  height: 400px;
+  margin: 0 auto;
+  background-color: lightskyblue;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#chat-input {
+  width: 60%;
+  height: 35px;
+  font-size: 22px;
+  padding: 2px 5px;
+}
+
+#chat-input:focus {
+  outline: 0;
+}
+
+#message-container { 
+  background-color: white;
+  list-style-type: none;
+  height: 300px;
+  width: 100%;
+  margin: 10px 0; 
+  padding: 0; 
+  overflow-y: scroll;
+  border: 1px solid rgb(255, 0, 191);
+  border-radius: 3px;
+}
+
 .meta {
   font-size: smaller;
   font-weight: lighter;
@@ -136,14 +145,15 @@ body {
 .post {
   background-color: lightblue;
   padding: 4px;
-  border-radius: 3px;
+  border-radius: 5px;
   margin: 6px;
-  min-width: 100px;
+  width: 80%;
 }
 
 .self {
   text-align: right;
   background-color: lightgreen;
+  float: right;
 }
 
 #leave {
