@@ -7,12 +7,18 @@ body {
 
 .join-container {
   background-color: white;
-  height: 80%;
+  height: 550px;
   margin: 10%;
   padding: 10px;
 }
 
+.chat-page {
+  background-color: thistle;
+}
 
+.form-control {
+  margin-bottom: 20px;
+}
 
 #sports {
   font-family: 'Tourney', cursive;
@@ -39,6 +45,13 @@ body {
 
 #chat-input {
   width: 60%;
+  height: 35px;
+  font-size: 22px;
+  padding: 2px 5px;
+}
+
+#chat-input:focus {
+  outline: 0;
 }
 
 .btn {
@@ -53,16 +66,21 @@ body {
   color: white;
 }
 
+.join {
+  margin-top: 20px;
+}
+
 .btn:hover {
   opacity: 100%;
+  cursor: default;
 }
 
 #message-container { 
   background-color: white;
   list-style-type: none;
   height: 300px;
-  width: 95%;
-  margin: 0 auto; 
+  width: 100%;
+  margin: 10px 0; 
   padding: 0; 
   overflow-y: scroll;
 }
@@ -79,8 +97,6 @@ body {
 #username:focus {
   outline: 0;
   border-color: rgb(28, 219, 28);
-  font-weight: 700;
-  background-color: rgb(200, 223, 194);
 }
 
 .sport-select-form input[type="radio"] {
@@ -128,4 +144,9 @@ body {
 .self {
   text-align: right;
   background-color: lightgreen;
+}
+
+#leave {
+  clear: both;
+  float: right;
 }
