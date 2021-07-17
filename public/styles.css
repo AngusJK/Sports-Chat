@@ -12,6 +12,19 @@ body {
   padding: 10px;
 }
 
+
+
+#sports {
+  font-family: 'Tourney', cursive;
+  color: rgba(218, 218, 5, 0.858);
+  font-size: 90px;
+}
+
+#chat {
+  font-family: 'Caveat', cursive;
+  font-size: 90px;
+}
+
 #window {
   display: flex;
   flex-direction: column;
@@ -25,16 +38,23 @@ body {
 }
 
 #chat-input {
-  width: 70%;
+  width: 60%;
 }
 
-#btn {
+.btn {
   border: none;
   border-radius: 3px;
-  padding: 5px;
-  background-color: cornflowerblue;
+  padding: 10px;
+  background-color: rgb(237, 100, 219);
   outline: none;
   margin: 2px;
+  opacity: 82%;
+  font-weight: 700;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 100%;
 }
 
 #message-container { 
