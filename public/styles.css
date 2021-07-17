@@ -34,6 +34,15 @@ body {
 
 /* index.html styles */
 
+.header {
+  margin-bottom: 40px;
+}
+
+.header-text {
+  display: table;
+  margin: 0 auto;
+}
+
 .form-control {
   margin-bottom: 20px;
 }
