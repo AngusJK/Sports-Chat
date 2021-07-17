@@ -56,7 +56,19 @@ socket.on('newClientConnect', (data) => {
 
 socket.on('connectToRoom', (data) => {
   addMessageToHTML(data);
-  roomName.innerHTML = room;
+  let roomWithEmoji = ''
+  if (room === "Baseball") {
+    roomWithEmoji = "⚾️  BASEBALL";
+  } else if (room === "Basketball") {
+    roomWithEmoji = "🏀  BASKETBALL";
+  } else if (room === "Hockey") {
+    roomWithEmoji = "🏒  HOCKEY";
+  } else if (room === "Soccer") {
+    roomWithEmoji = "⚽️  SOCCER";
+  } else if (room === "Tennis") {
+    roomWithEmoji = "🎾  TENNIS"
+  }
+  roomName.innerHTML = roomWithEmoji;
 });
 
 socket.on('past messages', (msgs) => {
