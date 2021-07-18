@@ -1,4 +1,4 @@
-This is a simple sports-themed chat app build with Express and utilizing Socket.io. Users can sign in with their name and choose one of five rooms to join. Each room is dedicated to a different sport. 
+This is a simple sports-themed chat app built with Express and utilizing Socket.io. Users can sign in with their name and choose one of five rooms to join. Each room is dedicated to a different sport. 
 
 ## Final Product
 
@@ -6,5 +6,5 @@ This is a simple sports-themed chat app build with Express and utilizing Socket.
 
 !["Screenshot of login page"](https://github.com/AngusJK/chat/blob/master/docs/login-page-screenshot.html.png?raw=true)
 
-Type "npm run dev" to start server.
+Type "npm run dev" on the command line to start server.
 
