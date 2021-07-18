@@ -44,7 +44,13 @@ body {
   margin: 0 auto;
 }
 
+.form {
+  display: table;
+  margin: 0 auto;
+}
+
 .name-input-form {
+  width: 400px;
   margin-bottom: 20px;
 }
 
@@ -62,10 +68,8 @@ body {
 #username {
   border: 0;
   border-bottom: 2px solid gray;
-  width: 60%;
+  width: 100%;
   padding: 3px;
-  display: table;
-  margin: 3px auto;
   font-size: 1.5rem;
 }
 
