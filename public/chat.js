@@ -15,8 +15,8 @@ function addMessageToHTML(message) {
   if(message.id === socket.id) {selfClass = "self"};
   const div = document.createElement('div');
   div.classList.add('message');
-  div.innerHTML = `<div class="post ${selfClass}"><p class="meta">${message.username} <span>${message.time}</span></p>
-    <p class="text">${message.text}</p></div>`;
+  div.innerHTML = `<span class="post ${selfClass}"><p class="meta">${message.username} <span>${message.time}</span></p>
+    <p class="text">${message.text}</p></span><br>`;
   messages.appendChild(div);
   messages.scrollTop = messages.scrollHeight;
 };
@@ -42,7 +42,7 @@ socket.on('chat message', (message) => {
 socket.on('new-user', (data) => {
   if (data.user.username != username) {
   const div = document.createElement('div');
-  div.classList.add('message');
+  div.classList.add('admin-message');
   div.innerHTML = `<p class="meta">${data.msg}</p>`;
   messages.appendChild(div);
   }
