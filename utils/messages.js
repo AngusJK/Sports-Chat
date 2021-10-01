@@ -1,24 +1,24 @@
-const moment = require('moment');
+const moment = require('moment')
 
-let messages = [];
+const messages = []
 
-function formatMessage(username, id, text) {
+const formatMessage = function (username, id, text) {
   return {
     username,
     id,
     text,
     time: moment().format('h:mm a')
-  };
-};
+  }
+}
 
-function saveMessage(room, username, id, text) {
-  let msg = formatMessage(username, id, text);
-  msg.room = room;
-  messages.push(msg);
-};
+const saveMessage = function (room, username, id, text) {
+  const msg = formatMessage(username, id, text)
+  msg.room = room
+  messages.push(msg)
+}
 
-function getMessages(room) {
-  return messages.filter(message => message.room === room);
-};
+const getMessages = function (room) {
+  return messages.filter(message => message.room === room)
+}
 
-module.exports = { formatMessage, saveMessage, getMessages };
+module.exports = { formatMessage, saveMessage, getMessages }
