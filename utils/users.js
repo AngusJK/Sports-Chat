@@ -1,30 +1,30 @@
-const users = [];
+const users = []
 
-function userJoin(id, username, room) {
-  const user = {id, username, room};
-  users.push(user);
-  return user;
-};
+const userJoin = function (id, username, room) {
+  const user = { id, username, room }
+  users.push(user)
+  return user
+}
 
-function getUser(id) {
-  return users.find(user => user.id === id);
-};
+const getUser = function (id) {
+  return users.find(user => user.id === id)
+}
 
-function getNumberOfUsers(room) {
-  let currentRoomUsers = users.filter(user => user.room === room);
-  return currentRoomUsers.length;
-};
+const getNumberOfUsers = function (room) {
+  const currentRoomUsers = users.filter(user => user.room === room)
+  return currentRoomUsers.length
+}
 
-function userLeave(id) {
-  const index = users.findIndex(user => user.id === id);
-  if(index != -1) {
-    users.splice(index, 1);
-  }  
-};
+const userLeave = function (id) {
+  const index = users.findIndex(user => user.id === id)
+  if (index !== -1) {
+    users.splice(index, 1)
+  }
+}
 
 module.exports = {
   userJoin,
   getUser,
   getNumberOfUsers,
   userLeave
-};
+}
